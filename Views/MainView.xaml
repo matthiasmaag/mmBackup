@@ -4,24 +4,104 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:mmBackup.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Height="450" Width="800">
+             mc:Ignorable="d">
     <DockPanel>
         <StackPanel DockPanel.Dock="Top">
-            <TextBlock>mmBackup</TextBlock>
-            <TextBlock>Gui for RoboCopy</TextBlock>
             <GroupBox Header="Verzeichnisse auswählen"
-                      DockPanel.Dock="Top">
-                <DockPanel>
-                    <TextBlock DockPanel.Dock="Top">Quellverzeichnis auswählen</TextBlock>
-                    <Button DockPanel.Dock="Right"
-                            Width="20"
-                            Margin="5"> ... </Button>
-                    <TextBox Margin="5"></TextBox>
-                </DockPanel>
+                      DockPanel.Dock="Top"
+                      Margin="5">
+                <StackPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top"
+                                   Margin="5">Quellverzeichnis auswählen</TextBlock>
+                        <Button DockPanel.Dock="Right"
+                                x:Name="OpenSourceDirectory"
+                                Width="20"
+                                Margin="5"> ... </Button>
+                        <TextBox Margin="5"
+                                 x:Name="SourcePath" />
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top"
+                                   Margin="5">Zielverzeichnis auswählen</TextBlock>
+                        <Button DockPanel.Dock="Right"
+                                x:Name="OpenDestinationDirectory"
+                                Width="20"
+                                Margin="5"> ... </Button>
+                        <TextBox Margin="5"
+                                 x:Name="DestinationPath" />
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top"
+                                   Margin="5">Dateifilter</TextBlock>
+                        <TextBox Margin="5"
+                                 x:Name="FileMask" />
+                    </DockPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Kopieroptionen"
+                      DockPanel.Dock="Top"
+                      Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <CheckBox x:Name="SubDirectories" 
+                                  ToolTip="Kopiert Unterverzeichnisse. Beachten Sie, dass bei dieser Option leere Verzeichnisse ausgeschlossen werden."
+                                  Margin="5">Unterverzeichnisse (/s)</CheckBox>
+                        <CheckBox x:Name="EmptySubDirectories" 
+                                  ToolTip="Kopiert Unterverzeichnisse. Beachten Sie, dass diese Option leere Verzeichnisse umfasst."
+                                  Margin="5">Leere Unterverzeichnisse (/e)</CheckBox>
+                        <CheckBox x:Name="Purge" 
+                                  ToolTip="Löscht Zieldateien und-Verzeichnisse, die in der Quelle nicht mehr vorhanden sind."
+                                  Margin="5">Zieldateien löschen (/purge)</CheckBox>
+                        <CheckBox x:Name="Mirror"
+                                  ToolTip="Spiegelt eine Verzeichnisstruktur wider (äquivalent zu /e und /Purge)"
+                                  Margin="5">Verzeichnis spiegeln (/mir)</CheckBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <CheckBox x:Name="MoveFiles" 
+                                  ToolTip="Verschiebt Dateien und löscht sie aus der Quelle, nachdem Sie kopiert wurden."
+                                  Margin="5">Dateien verschieben (/mov)</CheckBox>
+                        <CheckBox x:Name="Move" 
+                                  ToolTip="Verschiebt Dateien und Verzeichnisse und löscht sie aus der Quelle, nachdem Sie kopiert wurden."
+                                  Margin="5">Dateien und Verzeichnisse verschieben (/Move)</CheckBox>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Optionen für die Dateiauswahl"
+                      DockPanel.Dock="Top"
+                      Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <CheckBox x:Name="Archive" 
+                                  ToolTip="Kopiert nur Dateien, für die das Archive -Attribut festgelegt ist."
+                                  Margin="5">Archiv-Attribut (/a)</CheckBox>
+                        <CheckBox x:Name="ArchiveReset" 
+                                  ToolTip="Kopiert nur Dateien, für die das Archive-Attribut festgelegt ist, und setzt das Archiv Attribut zurück."
+                                  Margin="5">Archiv-Attribut zurücksetzen (/m)</CheckBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <CheckBox x:Name="ExcludeChangedFiles" 
+                                  ToolTip="Schließt geänderte Dateien aus"
+                                  Margin="5">Geänderte ausschließen (/xc)</CheckBox>
+                        <CheckBox x:Name="ExcludeNewFiles" 
+                                  ToolTip="Schließt neuere Dateien aus"
+                                  Margin="5">Neue ausschließen (/xn)</CheckBox>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Kommando"
+                      DockPanel.Dock="Top"
+                      Margin="5">
+                <StackPanel>
+                    <TextBlock x:Name="CommandTextBlock"
+                               Margin="5"
+                               Width="Auto"/>
+                        <Button x:Name="Execute"
+                                Width="70"
+                                Margin="5"
+                                Content="Ausführen" />
+                </StackPanel>
             </GroupBox>
         </StackPanel>
-        
     </DockPanel>
 </UserControl>
