@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 using Caliburn.Micro;
 using mmBackup.ViewModels.Base;
 using Screen = Caliburn.Micro.Screen;
@@ -16,6 +18,7 @@ namespace mmBackup.ViewModels
         public MainViewModel()
         {
             _windowManager = new WindowManager();
+            Log = new BindableCollection<string>();
         }
 
         protected override void OnActivate()
@@ -47,6 +50,8 @@ namespace mmBackup.ViewModels
         public bool ArchiveReset { get; set; }
         public bool ExcludeChangedFiles{ get; set; }
         public bool ExcludeNewFiles { get; set; }
+        
+        public IObservableCollection<string> Log { get; set; }
         
         #endregion properties
         
@@ -148,12 +153,42 @@ namespace mmBackup.ViewModels
 
         public void Execute()
         {
-            //TODO execute external process
+            Log.Clear();
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.Arguments = CommandTextBlock;
+                startInfo.UseShellExecute = false;
+                startInfo.CreateNoWindow = false;
+                startInfo.FileName = "Robocopy.exe";
+                startInfo.RedirectStandardOutput = true;
+                Process process = new Process();
+                process.StartInfo = startInfo;
+                process.Start();
+                while (!process.StandardOutput.EndOfStream)
+                {
+                    var line = process.StandardOutput.ReadLine();
+                    AddToLog(line);
+                }
+            }
+            catch (Exception ex)
+            {
+                AddToLog(ex.ToString());
+            }
         }
         
         #endregion public methods
 
         #region private methods
+
+        private void AddToLog(string message)
+        {
+            Log.Add(message);
+            while (Log.Count > 1000)
+            {
+                Log.RemoveAt(0);
+            }
+        }
 
         private void Reset()
         {
@@ -184,7 +219,7 @@ namespace mmBackup.ViewModels
             }
             else
             {
-                result = $"robocopy {SourcePath} {DestinationPath} {FileMask}";
+                result = $"{SourcePath} {DestinationPath} {FileMask}";
             }
 
             if (SubDirectories)

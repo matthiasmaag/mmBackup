@@ -100,6 +100,18 @@
                             Margin="5"/>
                 </StackPanel>
             </GroupBox>
+            <GroupBox Header="Ausgabe"
+                      Margin="5"
+                      MinHeight="150">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer>
+                        <ListView x:Name="Log"></ListView>
+                    </ScrollViewer>
+                </Grid>
+            </GroupBox>
         </StackPanel>
     </DockPanel>
 </UserControl>
