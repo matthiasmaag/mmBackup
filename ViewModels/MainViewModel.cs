@@ -1,10 +1,11 @@
 ﻿using System.Windows.Forms;
 using Caliburn.Micro;
+using mmBackup.ViewModels.Base;
 using Screen = Caliburn.Micro.Screen;
 
 namespace mmBackup.ViewModels
 {
-    internal class MainViewModel : Screen
+    internal class MainViewModel : BaseViewModel
     {
         #region private fields
 
@@ -116,6 +117,11 @@ namespace mmBackup.ViewModels
             GenerateCommand();
         }
         
+        public override void New()
+        {
+            Reset();
+        }
+        
         public void OpenSourceDirectory()
         {
             using (var dialog = new FolderBrowserDialog())
@@ -139,10 +145,33 @@ namespace mmBackup.ViewModels
                 }
             }
         }
+
+        public void Execute()
+        {
+            //TODO execute external process
+        }
         
         #endregion public methods
 
         #region private methods
+
+        private void Reset()
+        {
+            SourcePath = string.Empty;
+            DestinationPath = string.Empty;
+            FileMask = string.Empty;
+            CommandTextBlock = string.Empty;
+            SubDirectories = false;
+            EmptySubDirectories = false;
+            Purge = false;
+            Mirror = false;
+            MoveFiles = false;
+            Move = false;
+            Archive = false;
+            ArchiveReset= false;
+            ExcludeChangedFiles= false;
+            ExcludeNewFiles= false;
+        }
 
         private void GenerateCommand()
         {
@@ -216,5 +245,7 @@ namespace mmBackup.ViewModels
         }
 
         #endregion private methods
+
+        
     }
 }

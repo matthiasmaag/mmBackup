@@ -90,16 +90,14 @@
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Kommando"
-                      DockPanel.Dock="Top"
                       Margin="5">
                 <StackPanel>
                     <TextBlock x:Name="CommandTextBlock"
                                Margin="5"
                                Width="Auto"/>
-                        <Button x:Name="Execute"
-                                Width="70"
-                                Margin="5"
-                                Content="Ausführen" />
+                    <Button x:Name="Execute"
+                            Content="Ausführen"
+                            Margin="5"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
