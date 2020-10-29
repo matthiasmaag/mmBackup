@@ -12,6 +12,8 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_New..."
                           x:Name="New"/>
+                <MenuItem Header="_Save"
+                          x:Name="Save" />
                 <Separator />
                 <MenuItem Header="_Exit"
                           x:Name="Exit"/>
